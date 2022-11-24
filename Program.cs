@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             Forest forestFire = new Forest();
-            forestFire.displayForest();
+            forestFire.simulateForestFire();
         }
     }
 }

@@ -9,9 +9,16 @@
         public Forest()
         {
             this.forest = new Tree[Forest.lengthOfForest, Forest.breadthOfForest];
+            for(int i = 0; i < Forest.lengthOfForest; i++)
+            {
+                for(int j = 0; j < Forest.breadthOfForest; j++)
+                {
+                    this.forest[i, j] = new Tree();
+                }
+            }
         }
 
-        public void displayForest()
+        public void showForest()
         {
             for (; ; )
             {
@@ -25,33 +32,53 @@
                         {
                             this.forest[i, j] = new Tree();
                         }
-                        Console.Write(this.forest[i, j].getTreeStateSymbol() + ' ');
+                        Console.Write(this.forest[i, j].getTreeStateRepresentation() + ' ');
                     }
                     Console.Write("\n");
                 }
                 Console.ReadLine();
             }
         }
-    }
 
-    public class Tree
-    {
-        public TreeState treeState;
-
-        public Tree()
+        public void simulateForestFire()
         {
-            this.treeState = TreeState.Tree;
+            this.forest[10, 10].treeState = TreeState.Burning;
+            showForest();
+            Console.ReadLine();
+            while (true)
+            {
+                spreadForestFire();
+                Console.ReadLine();
+            }
         }
 
-        public String getTreeStateSymbol()
+        public void spreadForestFire()
         {
-            if (this.treeState == TreeState.Tree)
-                return "&";
-            else if (this.treeState == TreeState.Burning)
-                return "x";
-            else
-                return " ";
+            for (int i = 0; i < lengthOfForest; i++)
+            {
+                for (int j = 0; j < breadthOfForest; j++)
+                {
+                    if (this.forest[i, j].isNeighBourTreeBurning(this.forest, i, j)
+                       && isFireSpreads() && this.forest[i, j].treeState == TreeState.Tree)
+                    {
+                        this.forest[i, j].treeState = TreeState.Burning;
+                    }
+                    else if (this.forest[i, j].treeState == TreeState.Burning)
+                    {
+                        this.forest[i, j].treeState = TreeState.Empty;
+                    }
+                }
+            }
+            showForest();
         }
 
+        public Boolean isFireSpreads()
+        {
+            Random random = new Random();
+            int r = random.Next();
+            if (r % 2 == 0)
+                return true;
+            return false;
+        }
     }
 }
