@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FOREST_FIRE_SIMULATOR
+﻿namespace FOREST_FIRE_SIMULATOR
 {
     public class Tree
     {
         public TreeState treeState;
+        public int firedStep = -1;
 
         public Tree()
         {
