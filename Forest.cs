@@ -5,26 +5,27 @@
         public static int lengthOfForest = 21;
         public static int breadthOfForest = 21;
         public Tree[,] forest;
-
-        public Forest()
+        public Weather weather;
+        
+        public Forest(Weather weather)
         {
-            this.forest = new Tree[Forest.lengthOfForest, Forest.breadthOfForest];
-            for(int i = 0; i < Forest.lengthOfForest; i++)
-            {
-                for(int j = 0; j < Forest.breadthOfForest; j++)
-                {
-                    this.forest[i, j] = new Tree();
-                }
-            }
+            this.weather = weather;
+            this.forest = new Tree[lengthOfForest, breadthOfForest];
         }
 
         public void showForest()
         {
             Console.Clear();
-            Console.WriteLine("FOREST-FIRE-SIMULATOR\n");
-            for (int i = 0; i < Forest.lengthOfForest; i++)
+            Console.WriteLine("Entered Fire Impact due to various factors: ");
+            Console.WriteLine("Weather: " + this.weather.GetFireImpact());
+            double probability = this.weather.getProbability() * 100;
+            Console.WriteLine("Probability of fire spread: " + probability.ToString("0.00") + "%");
+            Console.WriteLine("");
+            Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - -");
+            for (int i = 0; i < lengthOfForest; i++)
             {
-                for (int j = 0; j < Forest.breadthOfForest; j++)
+                Console.Write("- ");
+                for (int j = 0; j < breadthOfForest; j++)
                 {
                     if (this.forest[i, j] == null)
                     {
@@ -32,8 +33,9 @@
                     }
                     Console.Write(this.forest[i, j].getTreeStateRepresentation() + ' ');
                 }
-                Console.Write("\n");
+                Console.Write("- \n");
             }
+            Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - -");
         }
 
         public void setForestFire()
@@ -80,9 +82,10 @@
 
         public Boolean isFireSpreads()
         {
+            double fireSpreadingProbability = this.weather.getProbability();
             Random random = new Random();
-            int r = random.Next(0,100);
-            if (r < 50)
+            double r = random.NextDouble() * (1);
+            if (r <= fireSpreadingProbability)
                 return true;
             return false;
         }
