@@ -1,18 +1,29 @@
 ﻿namespace FOREST_FIRE_SIMULATOR
 {
-    class Program
+    internal class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("Fire Impact on a factor can be HIGH(1), MEDIUM(2), LOW(3)\n\n");
+
+            Console.WriteLine("Fire Impact on a factor can be HIGH(1), MEDIUM(2), LOW(3)\n");
             Console.WriteLine("Enter Fire Impact due to Weather");
             int fireImpact = Convert.ToInt32(Console.ReadLine()) - 1;
             isFireImpactValueValid(fireImpact);
             Weather weather = new Weather();
             weather.setFireImpact(fireImpact);
-            Forest forestFire = new Forest(weather);
-            forestFire.showForest();
-            forestFire.simulateForestFire();
+            Console.WriteLine("Enter Fire Impact due to Fuel");
+            Fuel fuel = new Fuel();
+            fireImpact = Convert.ToInt32(Console.ReadLine()) - 1;
+            isFireImpactValueValid(fireImpact);
+            fuel.setFireImpact(fireImpact);
+            Console.WriteLine("Enter Fire Impact due to Topography");
+            Topography topography = new Topography();
+            fireImpact = Convert.ToInt32(Console.ReadLine()) - 1;
+            isFireImpactValueValid(fireImpact);
+            topography.setFireImpact(fireImpact);
+            Forest fireForest = new Forest(weather, fuel, topography);
+            fireForest.showForest();
+            fireForest.simulateForestFire();
         }
 
         static void isFireImpactValueValid(int fireImpact)

@@ -6,10 +6,14 @@
         public static int breadthOfForest = 21;
         public Tree[,] forest;
         public Weather weather;
-        
-        public Forest(Weather weather)
+        public Fuel fuel;
+        public Topography topography;
+
+        public Forest(Weather weather, Fuel fuel, Topography topography)
         {
             this.weather = weather;
+            this.fuel = fuel;
+            this.topography = topography;
             this.forest = new Tree[lengthOfForest, breadthOfForest];
         }
 
@@ -18,7 +22,10 @@
             Console.Clear();
             Console.WriteLine("Entered Fire Impact due to various factors: ");
             Console.WriteLine("Weather: " + this.weather.GetFireImpact());
-            double probability = this.weather.getProbability() * 100;
+            Console.WriteLine("Fuel: " + this.fuel.GetFireImpact());
+            Console.WriteLine("Topography: " + this.topography.GetFireImpact());
+            double probability = (this.weather.getProbability() +
+                this.fuel.getProbability() + this.topography.getProbability()) * 100;
             Console.WriteLine("Probability of fire spread: " + probability.ToString("0.00") + "%");
             Console.WriteLine("");
             Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - -");
@@ -82,7 +89,9 @@
 
         public Boolean isFireSpreads()
         {
-            double fireSpreadingProbability = this.weather.getProbability();
+            double fireSpreadingProbability = this.weather.getProbability() +
+                this.fuel.getProbability() +
+                this.topography.getProbability();
             Random random = new Random();
             double r = random.NextDouble() * (1);
             if (r <= fireSpreadingProbability)

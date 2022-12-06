@@ -1,9 +1,9 @@
 ﻿namespace FOREST_FIRE_SIMULATOR
 {
-    public class Weather
+    public class Topography
     {
         private FireImpact FireImpact;
-        private double probPercent = 0.35;
+        private double probPercent = 0.15; // 15% probability
 
         public FireImpact GetFireImpact()
         {
@@ -14,6 +14,7 @@
         {
             this.FireImpact = (FireImpact)FireImpactValue;
         }
+
         public double getProbability()
         {
             return this.probPercent / ((int)this.FireImpact + 1);
