@@ -1,5 +1,8 @@
 ﻿namespace FOREST_FIRE_SIMULATOR
 {
+    /// <summary>
+    /// Represent the forest where the fire simulation is done
+    /// </summary>
     public class Forest
     {
         public static int lengthOfForest = 21;
@@ -9,6 +12,12 @@
         public Fuel fuel;
         public Topography topography;
 
+        /// <summary>
+        /// Contructor
+        /// </summary>
+        /// <param name="weather">Weather entity</param>
+        /// <param name="fuel">Fuel entity</param>
+        /// <param name="topography">Topography entity</param>
         public Forest(Weather weather, Fuel fuel, Topography topography)
         {
             this.weather = weather;
@@ -17,10 +26,13 @@
             this.forest = new Tree[lengthOfForest, breadthOfForest];
         }
 
+        /// <summary>
+        /// Display the forest map in console.
+        /// </summary>
         public void showForest()
         {
             Console.Clear();
-            Console.WriteLine("Entered Fire Impact due to various factors: ");
+            Console.WriteLine("Entered Fire Impact due to various factors:\n");
             Console.WriteLine("Weather: " + this.weather.GetFireImpact());
             Console.WriteLine("Fuel: " + this.fuel.GetFireImpact());
             Console.WriteLine("Topography: " + this.topography.GetFireImpact());
@@ -45,6 +57,9 @@
             Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - -");
         }
 
+        /// <summary>
+        /// Sets fire in the 1st step in random position.
+        /// </summary>
         public void setForestFire()
         {
             Random random = new Random();
@@ -54,6 +69,9 @@
             this.forest[xIndex, yIndex].firedStep = 1;
         }
 
+        /// <summary>
+        /// Elemental method called from main method to simulate forest fire.
+        /// </summary>
         public void simulateForestFire()
         {
             int step = 0;
@@ -67,13 +85,18 @@
             }
         }
 
+        /// <summary>
+        /// Iterates the 2D array of Tree(s) and 
+        /// update the state based on its previous and neighbor tree's state.
+        /// </summary>
+        /// <param name="step"></param>
         public void spreadForestFire(int step)
         {
             for (int i = 0; i < lengthOfForest; i++)
             {
                 for (int j = 0; j < breadthOfForest; j++)
                 {
-                    if (this.forest[i, j].isNeighBourTreeBurning(this.forest, i, j)
+                    if (this.forest[i, j].isNeighborTreeBurning(this.forest, i, j)
                        && isFireSpreads() && this.forest[i, j].treeState == TreeState.Tree)
                     {
                         this.forest[i, j].treeState = TreeState.Burning;
@@ -87,6 +110,10 @@
             showForest();
         }
 
+        /// <summary>
+        /// Computes probability for fire spread
+        /// </summary>
+        /// <returns></returns>
         public Boolean isFireSpreads()
         {
             double fireSpreadingProbability = this.weather.getProbability() +

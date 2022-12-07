@@ -1,5 +1,8 @@
 ﻿namespace FOREST_FIRE_SIMULATOR
 {
+    /// <summary>
+    /// Class with main method.
+    /// </summary>
     internal class Program
     {
         static void Main(string[] args)
@@ -26,6 +29,10 @@
             fireForest.simulateForestFire();
         }
 
+        /// <summary>
+        /// Checks if user input for FireImpact is valid
+        /// </summary>
+        /// <param name="fireImpact">Fire Impact value</param>
         static void isFireImpactValueValid(int fireImpact)
         {
             if (fireImpact < 0 || fireImpact > 2)
